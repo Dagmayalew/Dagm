@@ -1,4 +1,4 @@
-# Dagmay Ayalew - Senior Mobile App Developer Portfolio V2 & CMS
+# Dagm Ayalew - Senior Mobile App Developer Portfolio V2 & CMS
 
 A high-performance, dynamic portfolio, dedicated case study platform, ATS CV generator, and administrative command center built for **Dagmay Ayalew** (Senior Mobile App Developer & Full-Stack Engineer).
 
