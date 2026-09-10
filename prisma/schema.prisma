@@ -1,0 +1,184 @@
+// Prisma Schema for Dagmay Ayalew's Portfolio & Dynamic CMS
+// Compatible with Supabase PostgreSQL and standard PostgreSQL
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Profile {
+  id              String   @id @default(cuid())
+  name            String   @default("Dagmay Ayalew")
+  title           String   @default("Senior Mobile App Developer")
+  tagline         String   @default("Building fluid, high-performance iOS, Android & Cross-Platform Mobile Experiences.")
+  bio             String   @db.Text
+  aboutMe         String   @db.Text
+  email           String   @default("dagmayalew@gmail.com")
+  phone           String?
+  location        String   @default("Addis Ababa, Ethiopia")
+  avatarUrl       String?
+  resumeUrl       String?
+  githubUrl       String?  @default("https://github.com/dagmayalew")
+  linkedinUrl     String?  @default("https://linkedin.com/in/dagmay-ayalew")
+  twitterUrl      String?
+  playStoreDevUrl String?
+  appStoreDevUrl  String?
+  isOpenToWork    Boolean  @default(true)
+  statusMessage   String   @default("Senior Mobile App Developer at Eaglelion System Technology | Building React Native & FinTech apps")
+  statusUpdatedAt DateTime @default(now())
+  
+  // Dynamic Theme Settings (controlled from /admin/theme)
+  // Stores accentColor ('emerald'|'cyan'|'violet'|'amber'|'rose'|'slate'), mode ('dark'|'light'), glassmorphism (boolean)
+  themeSettings   Json     @default("{\"accentColor\":\"emerald\",\"mode\":\"dark\",\"glassmorphism\":true,\"fontFamily\":\"sans\"}")
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  title        String
+  slug         String   @unique
+  summary      String
+  description  String   @db.Text
+  platform     String   @default("Flutter / iOS & Android") // Flutter, React Native, Swift (iOS), Kotlin (Android)
+  appStoreUrl  String?
+  playStoreUrl String?
+  githubUrl    String?
+  liveDemoUrl  String?
+  thumbnail    String
+  screenshots  String[] @default([])
+  featured     Boolean  @default(true)
+  techStack    String[] @default([])
+  keyMetrics   Json?    // e.g. {"downloads": "1M+ Downloads", "rating": "Eaglelion", "activeUsers": "Core Banking"}
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Experience {
+  id           String    @id @default(cuid())
+  company      String
+  role         String
+  location     String?
+  startDate    String
+  endDate      String?
+  isCurrent    Boolean   @default(false)
+  description  String?   @db.Text
+  achievements String[]  @default([])
+  techStack    String[]  @default([])
+  type         String    @default("FULL_TIME") // FULL_TIME, CONTRACT, FREELANCE
+  order        Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Education {
+  id           String   @id @default(cuid())
+  institution  String
+  degree       String
+  fieldOfStudy String
+  startDate    String
+  endDate      String?
+  isCurrent    Boolean  @default(false)
+  grade        String?
+  activities   String[] @default([])
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model SkillCategory {
+  id        String   @id @default(cuid())
+  name      String   // e.g. "Mobile Development", "Frontend & Web", "Backend & APIs", "DevOps & Tools"
+  order     Int      @default(0)
+  skills    Skill[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Skill {
+  id          String        @id @default(cuid())
+  name        String
+  proficiency Int           @default(90) // 1-100 percentage
+  yearsOfExp  Int?          @default(3)
+  iconName    String?
+  featured    Boolean       @default(false)
+  categoryId  String
+  category    SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  order       Int           @default(0)
+}
+
+model Certification {
+  id            String    @id @default(cuid())
+  title         String
+  issuer        String
+  issueDate     String
+  expiryDate    String?
+  credentialId  String?
+  credentialUrl String?
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+}
+
+model LifeUpdate {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  tag       String   @default("BUILDING") // BUILDING, LEARNING, LIFE, READING, MILESTONE
+  emoji     String   @default("")
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("USER") // ADMIN, USER
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
