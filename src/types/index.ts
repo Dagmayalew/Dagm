@@ -28,6 +28,28 @@ export interface PhoneMockupSettings {
   cryptoAlgorithm?: string;
 }
 
+export interface SectionVisibility {
+  showHero?: boolean;
+  showProjects?: boolean;
+  showExperience?: boolean;
+  showSkills?: boolean;
+  showContact?: boolean;
+}
+
+export interface SectionContentSettings {
+  heroHeadline?: string;
+  heroIntro?: string;
+  heroTechPills?: string[];
+  projectsTitle?: string;
+  projectsSubtitle?: string;
+  experienceTitle?: string;
+  experienceSubtitle?: string;
+  skillsTitle?: string;
+  skillsSubtitle?: string;
+  contactTitle?: string;
+  contactSubtitle?: string;
+}
+
 export interface ThemeSettings {
   accentColor: AccentPreset;
   preset?: AccentPreset;
@@ -44,6 +66,8 @@ export interface ThemeSettings {
   showLiveStatusBadge: boolean;
   enableAnimations: boolean;
   heroHeadlineStyle: "gradient" | "solid" | "glow";
+  sectionVisibility?: SectionVisibility;
+  sectionContent?: SectionContentSettings;
   phoneMockupSettings?: PhoneMockupSettings;
 }
 

@@ -22,6 +22,9 @@ import {
 
 export default function ProfileAdminPage() {
   const [profile, setProfile] = useState<ProfileData>(DEFAULT_PROFILE);
+  const [heroHeadline, setHeroHeadline] = useState("");
+  const [heroIntro, setHeroIntro] = useState("");
+  const [heroTechPillsText, setHeroTechPillsText] = useState("");
   const [saving, setSaving] = useState(false);
   const [savedSuccess, setSavedSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -30,7 +33,17 @@ export default function ProfileAdminPage() {
     // Fetch initial profile
     fetch("/api/profile")
       .then((res) => (res.ok ? res.json() : DEFAULT_PROFILE))
-      .then((data) => setProfile(data))
+      .then((data: ProfileData) => {
+        setProfile(data);
+        const sc = data.themeSettings?.sectionContent || {};
+        setHeroHeadline(sc.heroHeadline || data.title || "Senior Mobile App Developer");
+        setHeroIntro(sc.heroIntro || data.tagline || "");
+        setHeroTechPillsText(
+          sc.heroTechPills && sc.heroTechPills.length > 0
+            ? sc.heroTechPills.join(", ")
+            : "React Native, TypeScript, Flutter, Full-Stack (Next.js & Node.js)"
+        );
+      })
       .catch(() => setProfile(DEFAULT_PROFILE));
   }, []);
 
@@ -40,11 +53,29 @@ export default function ProfileAdminPage() {
     setSavedSuccess(false);
     setErrorMsg(null);
 
+    const pills = heroTechPillsText
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const payload: ProfileData = {
+      ...profile,
+      themeSettings: {
+        ...profile.themeSettings,
+        sectionContent: {
+          ...(profile.themeSettings?.sectionContent || {}),
+          heroHeadline,
+          heroIntro,
+          heroTechPills: pills,
+        },
+      },
+    };
+
     try {
       const res = await fetch("/api/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profile),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (data.success) {
@@ -159,6 +190,61 @@ export default function ProfileAdminPage() {
               onChange={(e) => setProfile({ ...profile, aboutMe: e.target.value })}
               className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
             />
+          </div>
+        </div>
+
+        {/* Section 1.5: Hero Homepage Display */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0d1424] border border-white/10 shadow-xl space-y-6">
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <FileText className="w-4 h-4 text-primary" /> Hero Section Display (Public Homepage)
+          </h3>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-300">
+              Hero Main Headline
+            </label>
+            <input
+              type="text"
+              value={heroHeadline}
+              onChange={(e) => setHeroHeadline(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+              placeholder="e.g. Senior Mobile App Developer"
+            />
+            <p className="text-[10px] text-slate-500">
+              Overrides the main H1 headline on the home page hero.
+            </p>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-300">
+              Hero Intro Paragraph
+            </label>
+            <textarea
+              rows={3}
+              value={heroIntro}
+              onChange={(e) => setHeroIntro(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
+              placeholder="e.g. Specialized in React Native, TypeScript, and Mobile Architecture..."
+            />
+            <p className="text-[10px] text-slate-500">
+              Paragraph displayed directly under the headline on the home page hero.
+            </p>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-semibold text-slate-300">
+              Core Tech Stack Badges (Comma-separated)
+            </label>
+            <input
+              type="text"
+              value={heroTechPillsText}
+              onChange={(e) => setHeroTechPillsText(e.target.value)}
+              className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+              placeholder="React Native, TypeScript, Flutter, Full-Stack"
+            />
+            <p className="text-[10px] text-slate-500">
+              Badges displayed right below the intro paragraph in the hero section.
+            </p>
           </div>
         </div>
 

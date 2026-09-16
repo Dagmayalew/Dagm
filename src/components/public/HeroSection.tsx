@@ -45,16 +45,21 @@ export function HeroSection({ profile }: { profile: ProfileData }) {
             {/* Main Headline & Intro */}
             <div className="space-y-3">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                Senior Mobile App Developer
+                {profile.themeSettings?.sectionContent?.heroHeadline || profile.title || "Senior Mobile App Developer"}
               </h1>
               <p className="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
-                Specialized in <strong className="text-white font-semibold">React Native</strong>, <strong className="text-white font-semibold">TypeScript</strong>, and <strong className="text-white font-semibold">Mobile Architecture</strong>, with production experience across financial super apps, agency banking, and e-commerce platforms. Also proficient in Flutter and Full-Stack development.
+                {profile.themeSettings?.sectionContent?.heroIntro || profile.tagline || profile.bio}
               </p>
             </div>
 
             {/* Core Tech Stack Pills */}
             <div className="flex flex-wrap items-center gap-2 pt-1">
-              {["React Native", "TypeScript", "Flutter", "Full-Stack (Next.js & Node.js)"].map((tech, idx) => (
+              {(
+                profile.themeSettings?.sectionContent?.heroTechPills &&
+                profile.themeSettings.sectionContent.heroTechPills.length > 0
+                  ? profile.themeSettings.sectionContent.heroTechPills
+                  : ["React Native", "TypeScript", "Flutter", "Full-Stack (Next.js & Node.js)"]
+              ).map((tech, idx) => (
                 <span
                   key={tech}
                   className={`px-3 py-1 rounded-lg text-xs font-medium border ${

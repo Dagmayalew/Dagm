@@ -4,7 +4,15 @@ import { useState } from "react";
 import { Send, CheckCircle2, Loader2, Mail, MessageSquare, User } from "lucide-react";
 import { ProfileData } from "@/types";
 
-export function ContactForm({ profile }: { profile: ProfileData }) {
+export function ContactForm({
+  profile,
+  title,
+  subtitle,
+}: {
+  profile: ProfileData;
+  title?: string;
+  subtitle?: string;
+}) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -54,10 +62,10 @@ export function ContactForm({ profile }: { profile: ProfileData }) {
               <Send className="w-3.5 h-3.5" /> Direct Contact
             </div>
             <h2 className="text-3xl font-black text-white tracking-tight">
-              Get In Touch
+              {title || "Get In Touch"}
             </h2>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Interested in discussing a mobile engineering project, senior role, or technical collaboration? Send a message below or reach out directly at{" "}
+              {subtitle || "Interested in discussing a mobile engineering project, senior role, or technical collaboration? Send a message below or reach out directly at "}
               <a href={`mailto:${profile.email}`} className="text-primary hover:underline font-medium">
                 {profile.email}
               </a>.

@@ -931,6 +931,23 @@ export default function ThemeCustomizerPage() {
                   <label className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] cursor-pointer">
                     <div>
                       <span className="text-xs font-bold text-white block">
+                        Show Phone Hardware Mockup in Hero
+                      </span>
+                      <span className="text-[10px] text-slate-400">
+                        Display the interactive floating iPhone 16 Pro hardware frame on the home page hero.
+                      </span>
+                    </div>
+                    <input
+                      type="checkbox"
+                      checked={current.showPhoneMockup !== false}
+                      onChange={(e) => handleChange({ showPhoneMockup: e.target.checked })}
+                      className="w-4 h-4 rounded text-primary focus:ring-primary bg-white/5"
+                    />
+                  </label>
+
+                  <label className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] cursor-pointer">
+                    <div>
+                      <span className="text-xs font-bold text-white block">
                         Show Live Status Pulse Badge
                       </span>
                       <span className="text-[10px] text-slate-400">
@@ -961,6 +978,149 @@ export default function ThemeCustomizerPage() {
                       className="w-4 h-4 rounded text-primary focus:ring-primary bg-white/5"
                     />
                   </label>
+                </div>
+
+                {/* Section Visibility Switches */}
+                <div className="space-y-3 pt-3 border-t border-white/5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Home Page Section Visibility
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {[
+                      { key: "showHero", label: "Hero & Bio Section" },
+                      { key: "showProjects", label: "Selected Work / Projects" },
+                      { key: "showExperience", label: "Career History / CV" },
+                      { key: "showSkills", label: "Technical Arsenal / Skills" },
+                      { key: "showContact", label: "Direct Contact CTA" },
+                    ].map((sec) => {
+                      const vis = current.sectionVisibility || {};
+                      const isVisible = vis[sec.key as keyof typeof vis] !== false;
+                      return (
+                        <label
+                          key={sec.key}
+                          className="flex items-center justify-between p-2.5 rounded-xl bg-white/[0.02] border border-white/5 hover:bg-white/[0.04] cursor-pointer"
+                        >
+                          <span className="text-xs font-semibold text-white">{sec.label}</span>
+                          <input
+                            type="checkbox"
+                            checked={isVisible}
+                            onChange={(e) => {
+                              const updatedVis = { ...vis, [sec.key]: e.target.checked };
+                              handleChange({ sectionVisibility: updatedVis });
+                            }}
+                            className="w-4 h-4 rounded text-primary focus:ring-primary bg-white/5"
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Section Headings & Descriptions */}
+                <div className="space-y-3 pt-3 border-t border-white/5">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Section Titles & Subtitles
+                  </h4>
+
+                  {/* Selected Work Title */}
+                  <div className="space-y-2 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                    <label className="text-xs font-bold text-white block">Selected Work Header</label>
+                    <input
+                      type="text"
+                      value={current.sectionContent?.projectsTitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), projectsTitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Featured Mobile Projects"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+                    />
+                    <textarea
+                      rows={2}
+                      value={current.sectionContent?.projectsSubtitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), projectsSubtitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Production React Native and mobile applications built for scale..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
+                    />
+                  </div>
+
+                  {/* Experience Title */}
+                  <div className="space-y-2 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                    <label className="text-xs font-bold text-white block">Career History Header</label>
+                    <input
+                      type="text"
+                      value={current.sectionContent?.experienceTitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), experienceTitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Work Experience"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+                    />
+                    <textarea
+                      rows={2}
+                      value={current.sectionContent?.experienceSubtitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), experienceSubtitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Track record of shipping production mobile applications..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
+                    />
+                  </div>
+
+                  {/* Skills Title */}
+                  <div className="space-y-2 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                    <label className="text-xs font-bold text-white block">Technical Arsenal Header</label>
+                    <input
+                      type="text"
+                      value={current.sectionContent?.skillsTitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), skillsTitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Technologies & Tools"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+                    />
+                    <textarea
+                      rows={2}
+                      value={current.sectionContent?.skillsSubtitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), skillsSubtitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Focused on production React Native mobile architectures..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
+                    />
+                  </div>
+
+                  {/* Contact Title */}
+                  <div className="space-y-2 p-3 rounded-xl bg-white/[0.02] border border-white/5">
+                    <label className="text-xs font-bold text-white block">Contact CTA Header</label>
+                    <input
+                      type="text"
+                      value={current.sectionContent?.contactTitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), contactTitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Get In Touch"
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+                    />
+                    <textarea
+                      rows={2}
+                      value={current.sectionContent?.contactSubtitle || ""}
+                      onChange={(e) => {
+                        const sc = { ...(current.sectionContent || {}), contactSubtitle: e.target.value };
+                        handleChange({ sectionContent: sc });
+                      }}
+                      placeholder="e.g. Interested in discussing a mobile engineering project..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary resize-none"
+                    />
+                  </div>
                 </div>
               </div>
 

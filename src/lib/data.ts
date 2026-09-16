@@ -35,6 +35,14 @@ export const getProfile = cache(
           themeSettings: {
             ...DEFAULT_PROFILE.themeSettings,
             ...savedTheme,
+            sectionVisibility: {
+              ...DEFAULT_PROFILE.themeSettings.sectionVisibility,
+              ...(savedTheme.sectionVisibility || {}),
+            },
+            sectionContent: {
+              ...DEFAULT_PROFILE.themeSettings.sectionContent,
+              ...(savedTheme.sectionContent || {}),
+            },
             phoneMockupSettings: {
               ...DEFAULT_PROFILE.themeSettings.phoneMockupSettings,
               ...(savedTheme.phoneMockupSettings || {}),

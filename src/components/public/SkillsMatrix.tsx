@@ -29,7 +29,15 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Server,
 };
 
-export function SkillsMatrix({ categories }: { categories: SkillCategoryData[] }) {
+export function SkillsMatrix({
+  categories,
+  title,
+  subtitle,
+}: {
+  categories: SkillCategoryData[];
+  title?: string;
+  subtitle?: string;
+}) {
   const [selectedCat, setSelectedCat] = useState<string>("all");
 
   const filteredCategories =
@@ -47,10 +55,10 @@ export function SkillsMatrix({ categories }: { categories: SkillCategoryData[] }
             <Terminal className="w-3.5 h-3.5" /> Technical Arsenal
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Technologies & Tools
+            {title || "Technologies & Tools"}
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Focused on production React Native mobile architectures, with end-to-end full-stack capabilities.
+            {subtitle || "Focused on production React Native mobile architectures, with end-to-end full-stack capabilities."}
           </p>
         </div>
 

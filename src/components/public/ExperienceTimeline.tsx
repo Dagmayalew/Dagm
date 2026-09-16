@@ -3,7 +3,15 @@
 import { ExperienceData } from "@/types";
 import { Briefcase, Calendar, MapPin, CheckCircle2 } from "lucide-react";
 
-export function ExperienceTimeline({ experiences }: { experiences: ExperienceData[] }) {
+export function ExperienceTimeline({
+  experiences,
+  title,
+  subtitle,
+}: {
+  experiences: ExperienceData[];
+  title?: string;
+  subtitle?: string;
+}) {
   return (
     <section id="experience" className="py-16 relative scroll-mt-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -14,10 +22,10 @@ export function ExperienceTimeline({ experiences }: { experiences: ExperienceDat
             <Briefcase className="w-3.5 h-3.5" /> Career History
           </div>
           <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Work Experience
+            {title || "Work Experience"}
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
-            Track record of shipping production mobile applications and leading feature delivery.
+            {subtitle || "Track record of shipping production mobile applications and leading feature delivery."}
           </p>
         </div>
 
