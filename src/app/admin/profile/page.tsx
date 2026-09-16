@@ -17,6 +17,7 @@ import {
   Phone,
   Briefcase,
   AlertCircle,
+  FileText,
 } from "lucide-react";
 
 export default function ProfileAdminPage() {
@@ -272,6 +273,22 @@ export default function ProfileAdminPage() {
                 onChange={(e) => setProfile({ ...profile, twitterUrl: e.target.value })}
                 className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
               />
+            </div>
+
+            <div className="space-y-1.5 sm:col-span-2">
+              <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5 text-primary" /> External PDF Resume Link (Optional)
+              </label>
+              <input
+                type="text"
+                value={profile.resumeUrl || ""}
+                onChange={(e) => setProfile({ ...profile, resumeUrl: e.target.value })}
+                className="w-full px-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs focus:outline-none focus:border-primary"
+                placeholder="e.g. /cv or https://drive.google.com/... (Defaults to dynamic 1-click ATS PDF generator)"
+              />
+              <p className="text-[11px] text-slate-400">
+                Leave empty or set to <code className="text-primary font-mono">/cv</code> to use the interactive dynamic ATS CV generator. You can also paste a direct link to a hosted PDF.
+              </p>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Smartphone, FileText, Compass, Clock, Send, ShieldCheck, Menu, X } from "lucide-react";
+import { Smartphone, FileText, Compass, Clock, Send, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProfileData } from "@/types";
 
@@ -31,7 +31,7 @@ export function Navbar({ profile }: { profile: ProfileData }) {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 no-print",
         scrolled
           ? "bg-[#090d16]/85 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/40 py-3"
           : "bg-transparent py-5"
@@ -76,32 +76,25 @@ export function Navbar({ profile }: { profile: ProfileData }) {
           })}
         </nav>
 
-        {/* Right Action & Admin entry */}
+        {/* Right Action */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/cv"
-            className="flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-primary/40 text-primary hover:bg-primary/10 transition-all"
+            href="/cv?download=true"
+            onClick={(e) => {
+              if (pathname === "/cv") {
+                e.preventDefault();
+                window.print();
+              }
+            }}
+            className="flex items-center gap-2 text-xs font-semibold px-4 py-2 rounded-lg border border-primary/40 text-primary hover:bg-primary/10 transition-all cursor-pointer"
           >
             <FileText className="w-3.5 h-3.5" />
             Download CV
-          </Link>
-          <Link
-            href="/admin"
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors"
-            title="Admin Dashboard"
-          >
-            <ShieldCheck className="w-5 h-5" />
           </Link>
         </div>
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 md:hidden">
-          <Link
-            href="/admin"
-            className="p-2 rounded-lg text-slate-400 hover:text-white"
-          >
-            <ShieldCheck className="w-5 h-5" />
-          </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10"

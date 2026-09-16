@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Github, Lock, Mail, ShieldCheck, ArrowRight, Loader2, KeyRound } from "lucide-react";
+import { Github, Lock, Mail, ShieldCheck, ArrowRight, Loader2 } from "lucide-react";
 
 export function AdminLoginForm() {
-  const [email, setEmail] = useState("dagmayalew489@gmail.com");
-  const [password, setPassword] = useState("admin");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -88,12 +88,12 @@ export function AdminLoginForm() {
           <div className="relative">
             <Mail className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
-              type="text"
+              type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-primary"
-              placeholder="dagmayalew489@gmail.com"
+              placeholder="admin@example.com"
             />
           </div>
         </div>
@@ -108,20 +108,8 @@ export function AdminLoginForm() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-9 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-primary"
+              placeholder="••••••••"
             />
-          </div>
-          <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1">
-            <span>Default password: <code className="text-primary font-mono font-bold">admin</code></span>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail("dagmayalew489@gmail.com");
-                setPassword("admin");
-              }}
-              className="text-primary hover:underline font-semibold flex items-center gap-1"
-            >
-              <KeyRound className="w-3 h-3" /> Auto-fill
-            </button>
           </div>
         </div>
 

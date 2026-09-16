@@ -207,16 +207,74 @@
   background: #334155;
 }
 
-/* Print Styles */
+/* Print Styles for ATS & PDF generation */
 @media print {
-  body {
-    background: #ffffff !important;
-    color: #000000 !important;
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm;
   }
-  .no-print {
+  
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+  }
+  
+  header, footer, nav, .no-print, [role="navigation"] {
     display: none !important;
   }
+  
   .print-only {
     display: block !important;
+  }
+
+  .cv-sheet {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .cv-sheet * {
+    color: #0f172a !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  .cv-sheet .print-primary,
+  .cv-sheet h1,
+  .cv-sheet h2,
+  .cv-sheet h3 {
+    color: #090d16 !important;
+  }
+
+  .cv-sheet .print-accent {
+    color: #047857 !important;
+    font-weight: 700 !important;
+  }
+
+  .cv-sheet .print-muted {
+    color: #475569 !important;
+  }
+
+  .cv-sheet .print-border {
+    border-color: #cbd5e1 !important;
+  }
+
+  .cv-sheet .print-badge {
+    border: 1px solid #cbd5e1 !important;
+    background: #f8fafc !important;
+    color: #0f172a !important;
+  }
+
+  .cv-break-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }

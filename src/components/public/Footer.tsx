@@ -4,7 +4,7 @@ import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from "lucide-react";
 
 export function Footer({ profile }: { profile: ProfileData }) {
   return (
-    <footer className="border-t border-white/10 bg-[#06090f] relative">
+    <footer className="border-t border-white/10 bg-[#06090f] relative no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Col 1: Bio */}
@@ -56,11 +56,6 @@ export function Footer({ profile }: { profile: ProfileData }) {
               <li>
                 <Link href="/contact" className="text-slate-300 hover:text-primary transition-colors">
                   Contact & Inquiries
-                </Link>
-              </li>
-              <li>
-                <Link href="/admin" className="text-slate-500 hover:text-slate-300 transition-colors">
-                  Admin CMS
                 </Link>
               </li>
             </ul>

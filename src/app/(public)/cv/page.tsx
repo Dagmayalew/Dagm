@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import {
   getProfile,
   getExperiences,
@@ -42,13 +43,15 @@ export default async function CVPage() {
         </div>
 
         {/* CV Preview & Print Component */}
-        <CVPreview
-          profile={profile}
-          experiences={experiences}
-          education={education}
-          skillCategories={skillCategories}
-          certifications={certifications}
-        />
+        <Suspense fallback={<div className="h-96 rounded-3xl bg-white/5 animate-pulse" />}>
+          <CVPreview
+            profile={profile}
+            experiences={experiences}
+            education={education}
+            skillCategories={skillCategories}
+            certifications={certifications}
+          />
+        </Suspense>
       </div>
     </div>
   );

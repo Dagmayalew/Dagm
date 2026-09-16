@@ -42,19 +42,19 @@ export async function GET(request: Request) {
     });
 
     const userData = await userRes.json();
-    const adminUsername = process.env.ADMIN_GITHUB_USERNAME || "dagmayalew";
-    const adminEmail = process.env.ADMIN_EMAIL || "dagmayalew@gmail.com";
+    const adminUsername = process.env.ADMIN_GITHUB_USERNAME?.trim().toLowerCase();
+    const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
 
     const isAuthorized =
-      (userData.login && userData.login.toLowerCase() === adminUsername.toLowerCase()) ||
-      (userData.email && userData.email.toLowerCase() === adminEmail.toLowerCase());
+      (adminUsername && userData.login && userData.login.toLowerCase() === adminUsername) ||
+      (adminEmail && userData.email && userData.email.toLowerCase() === adminEmail);
 
     if (!isAuthorized) {
       return NextResponse.redirect(new URL("/admin/login?error=Unauthorized+GitHub+Account", request.url));
     }
 
     // 3. Set verified admin session
-    await setOAuthAdminSession(userData.email || adminEmail);
+    await setOAuthAdminSession(userData.email || adminEmail || "admin@portfolio");
 
     return NextResponse.redirect(new URL(state, request.url));
   } catch (err) {

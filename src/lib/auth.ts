@@ -76,23 +76,21 @@ export async function loginAdmin(
   email: string,
   pass: string
 ): Promise<{ success: boolean; error?: string }> {
-  const rawAdminEmail = (process.env.ADMIN_EMAIL || "dagmayalew@gmail.com").replace(/["']/g, "").trim().toLowerCase();
-  const rawAdminPassword = (process.env.ADMIN_PASSWORD || "admin").replace(/["']/g, "").trim();
+  const adminEmail = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD?.trim();
+
+  if (!adminEmail || !adminPassword) {
+    return {
+      success: false,
+      error: "Admin credentials are not configured in environment variables.",
+    };
+  }
 
   const inputEmail = (email || "").trim().toLowerCase();
   const inputPass = (pass || "").trim();
 
-  // Allow either configured admin email OR default fallback
-  const isEmailMatch =
-    inputEmail === rawAdminEmail ||
-    inputEmail === "dagmayalew@gmail.com" ||
-    inputEmail === "admin" ||
-    inputEmail === "admin@dagmayalew.dev";
-
-  const isPasswordMatch = inputPass === rawAdminPassword || inputPass === "admin";
-
-  if (isEmailMatch && isPasswordMatch) {
-    const token = createSessionToken(rawAdminEmail);
+  if (inputEmail === adminEmail && inputPass === adminPassword) {
+    const token = createSessionToken(adminEmail);
     const cookieStore = await cookies();
     cookieStore.set(ADMIN_SESSION_COOKIE, token, {
       httpOnly: true,
@@ -106,7 +104,7 @@ export async function loginAdmin(
 
   return {
     success: false,
-    error: `Invalid credentials. Expected Email: ${rawAdminEmail}, Password: ${rawAdminPassword}`,
+    error: "Invalid email or password.",
   };
 }
 
