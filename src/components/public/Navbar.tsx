@@ -77,7 +77,7 @@ export function Navbar({ profile }: { profile: ProfileData }) {
         </nav>
 
         {/* Right Action */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
           <Link
             href="/cv?download=true"
             onClick={(e) => {
@@ -91,10 +91,24 @@ export function Navbar({ profile }: { profile: ProfileData }) {
             <FileText className="w-3.5 h-3.5" />
             Download CV
           </Link>
+          {/* Invisible secret link to Admin for the owner */}
+          <Link
+            href="/admin"
+            className="w-4 h-8 opacity-0 hover:opacity-0 focus:opacity-0 cursor-default select-none block"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
         </div>
 
         {/* Mobile menu button */}
         <div className="flex items-center gap-2 md:hidden">
+          {/* Invisible secret link to Admin on mobile */}
+          <Link
+            href="/admin"
+            className="w-4 h-8 opacity-0 hover:opacity-0 focus:opacity-0 cursor-default select-none block"
+            aria-hidden="true"
+            tabIndex={-1}
+          />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 rounded-lg text-slate-300 hover:text-white hover:bg-white/10"
