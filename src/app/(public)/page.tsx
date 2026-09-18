@@ -9,8 +9,9 @@ import { HeroSection } from "@/components/public/HeroSection";
 import { ProjectCard } from "@/components/public/ProjectCard";
 import { ExperienceTimeline } from "@/components/public/ExperienceTimeline";
 import { SkillsMatrix } from "@/components/public/SkillsMatrix";
+import { TerminalViewer } from "@/components/public/TerminalViewer";
 import { ContactForm } from "@/components/public/ContactForm";
-import { Smartphone, ArrowRight } from "lucide-react";
+import { Smartphone, ArrowRight, Terminal } from "lucide-react";
 
 export const revalidate = 3600;
 
@@ -93,7 +94,42 @@ export default async function HomePage() {
         />
       )}
 
-      {/* 5. Contact Form CTA */}
+      {/* 5. Interactive Terminal Section */}
+      {sections.showTerminal !== false && (
+        <section id="terminal" className="py-16 relative scroll-mt-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold uppercase tracking-wider">
+                  <Terminal className="w-3.5 h-3.5" /> Interactive Shell
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+                  {content.terminalTitle || "Interactive Terminal Portfolio"}
+                </h2>
+                <p className="text-slate-400 text-sm sm:text-base max-w-xl">
+                  {content.terminalSubtitle ||
+                    "Prefer the command line? Run commands directly below in this real-time embedded CLI shell."}
+                </p>
+              </div>
+
+              <Link
+                href="/terminal"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-white font-semibold text-xs border border-white/10 transition-all self-start md:self-auto"
+              >
+                Launch Full Page
+                <ArrowRight className="w-3.5 h-3.5 text-primary" />
+              </Link>
+            </div>
+
+            <TerminalViewer
+              src="https://terminal.dagmayalew.online/"
+              heightClassName="h-[600px] sm:h-[660px]"
+            />
+          </div>
+        </section>
+      )}
+
+      {/* 6. Contact Form CTA */}
       {sections.showContact !== false && (
         <ContactForm
           profile={profile}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Smartphone, FileText, Compass, Clock, Send, Menu, X } from "lucide-react";
+import { Smartphone, FileText, Compass, Clock, Send, Menu, X, Terminal } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ProfileData } from "@/types";
 
@@ -24,6 +24,7 @@ export function Navbar({ profile }: { profile: ProfileData }) {
     { href: "/", label: "Portfolio", icon: Smartphone },
     { href: "/projects", label: "Mobile Apps", icon: Compass },
     { href: "/cv", label: "Dynamic CV", icon: FileText },
+    { href: "/terminal", label: "Terminal", icon: Terminal },
     { href: "/now", label: "Now / Life", icon: Clock },
     { href: "/contact", label: "Contact", icon: Send },
   ];

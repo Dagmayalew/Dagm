@@ -33,6 +33,7 @@ export interface SectionVisibility {
   showProjects?: boolean;
   showExperience?: boolean;
   showSkills?: boolean;
+  showTerminal?: boolean;
   showContact?: boolean;
 }
 
@@ -46,6 +47,8 @@ export interface SectionContentSettings {
   experienceSubtitle?: string;
   skillsTitle?: string;
   skillsSubtitle?: string;
+  terminalTitle?: string;
+  terminalSubtitle?: string;
   contactTitle?: string;
   contactSubtitle?: string;
 }

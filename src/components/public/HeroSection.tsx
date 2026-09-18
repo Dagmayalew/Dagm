@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Github,
   Linkedin,
+  Terminal,
 } from "lucide-react";
 
 export function HeroSection({ profile }: { profile: ProfileData }) {
@@ -81,6 +82,14 @@ export function HeroSection({ profile }: { profile: ProfileData }) {
               >
                 Selected Work
                 <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+
+              <Link
+                href="/terminal"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] text-white font-semibold text-xs border border-white/10 transition-all group"
+              >
+                <Terminal className="w-3.5 h-3.5 text-primary group-hover:scale-110 transition-transform" />
+                CLI Mode
               </Link>
 
               <Link

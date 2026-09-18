@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProfileData } from "@/types";
-import { Github, Linkedin, Twitter, Mail, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail, ArrowUpRight, Terminal } from "lucide-react";
 
 export function Footer({ profile }: { profile: ProfileData }) {
   return (
@@ -46,6 +46,11 @@ export function Footer({ profile }: { profile: ProfileData }) {
               <li>
                 <Link href="/cv" className="text-slate-300 hover:text-primary transition-colors inline-flex items-center gap-1">
                   Dynamic CV & Resume <ArrowUpRight className="w-3 h-3" />
+                </Link>
+              </li>
+              <li>
+                <Link href="/terminal" className="text-slate-300 hover:text-primary transition-colors inline-flex items-center gap-1">
+                  <Terminal className="w-3 h-3 text-primary" /> Interactive Terminal
                 </Link>
               </li>
               <li>

@@ -48,6 +48,7 @@ export const DEFAULT_PROFILE: ProfileData = {
       showProjects: true,
       showExperience: true,
       showSkills: true,
+      showTerminal: true,
       showContact: true,
     },
     sectionContent: {
@@ -60,6 +61,8 @@ export const DEFAULT_PROFILE: ProfileData = {
       experienceSubtitle: "Track record of shipping production mobile applications and leading feature delivery.",
       skillsTitle: "Technologies & Tools",
       skillsSubtitle: "Focused on production React Native mobile architectures, with end-to-end full-stack capabilities.",
+      terminalTitle: "Interactive Terminal Portfolio",
+      terminalSubtitle: "Prefer the command line? Run commands directly below in this real-time embedded CLI shell.",
       contactTitle: "Get In Touch",
       contactSubtitle: "Interested in discussing a mobile engineering project, senior role, or technical collaboration? Send a message below or reach out directly.",
     },
